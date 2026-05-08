@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy Scraper - ржУржпрж╝рзЗржм рж╕рзНржХрзНрж░рзНржпрж╛ржкрж╛рж░</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-section {
+            background: #f7f9fc;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .progress-section {
+            background: #f7f9fc;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            height: 30px;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stop-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ЁЯЪА Proxy Scraper Pro</h1>
+            <p>ржпрзЗржХрзЛржирзЛ Proxy рж╕рзЗржмрж╛ ржерзЗржХрзЗ ржЙржЪрзНржЪ-ржЧрждрж┐рж░ ржкрзНрж░ржХрзНрж╕рж┐ ржЬрзЗржирж╛рж░рзЗржЯ ржХрж░рзБржи</p>
+        </div>
+        
+        <div class="content">
+            <div class="form-section">
+                <h2>ЁЯУб Proxy Configuration</h2>
+                <form id="proxyForm">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Proxy Host</label>
+                            <input type="text" id="host" placeholder="e.g., prem.country.iprocket.io" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Proxy Port</label>
+                            <input type="text" id="port" placeholder="e.g., 9595" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="username" placeholder="Proxy Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="password" placeholder="Proxy Password" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Quantity (ржХрждржЧрзБрж▓рж┐ ржкрзНрж░ржХрзНрж╕рж┐ ржЪрж╛ржи?)</label>
+                            <input type="number" id="quantity" value="20" min="1" max="1000">
+                        </div>
+                        <div class="form-group">
+                            <label>Stick Time (рж╕рзЗржХрзЗржирзНржб)</label>
+                            <input type="number" id="stickTime" value="60" min="10" max="3600">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Target ISPs (ржХржорж╛ ржжрж┐ржпрж╝рзЗ ржЖрж▓рж╛ржжрж╛ ржХрж░рзБржи)</label>
+                        <input type="text" id="targetIsps" value="T-Mobile USA, Verizon Business, AT&T" placeholder="ISP1, ISP2, ISP3">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Threads (ржерзНрж░рзЗржб рж╕ржВржЦрзНржпрж╛)</label>
+                        <input type="number" id="threads" value="20" min="1" max="50">
+                    </div>
+                    
+                    <button type="submit" id="startBtn">тЦ╢ рж╢рзБрж░рзБ ржХрж░рзБржи</button>
+                </form>
+            </div>
+            
+            <div class="progress-section" id="progressSection">
+                <h2>ЁЯУК рж╕рзНржХрзНрж░рзНржпрж╛ржкрж┐ржВ ржкрзНрж░ржЧрзНрж░рзЗрж╕</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="progressCount">0</h3>
+                        <p>ржкрзНрж░ржХрзНрж╕рж┐ ржкрж╛ржУржпрж╝рж╛ ржЧрзЗржЫрзЗ</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="targetTotal">20</h3>
+                        <p>рж▓ржХрзНрж╖рзНржпржорж╛рждрзНрж░рж╛</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="statusText">ржкрзНрж░рж╕рзНрждрзБржд</h3>
+                        <p>рж╕рзНржЯрзНржпрж╛ржЯрж╛рж╕</p>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="stopBtn" class="stop-btn">тП╣ ржмржирзНржз ржХрж░рзБржи</button>
+                    <button id="downloadBtn" class="download-btn">ЁЯТ╛ ржбрж╛ржЙржирж▓рзЛржб ржХрж░рзБржи</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let progressInterval = null;
+        
+        document.getElementById('proxyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                host: document.getElementById('host').value,
+                port: document.getElementById('port').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                quantity: parseInt(document.getElementById('quantity').value),
+                stick_time: parseInt(document.getElementById('stickTime').value),
+                target_isps: document.getElementById('targetIsps').value.split(',').map(s => s.trim()),
+                threads: parseInt(document.getElementById('threads').value)
+            };
+            
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('startBtn').textContent = 'ржЪрж╛рж▓рзБ рж╣ржЪрзНржЫрзЗ...';
+            
+            try {
+                const response = await fetch('/start_scraping', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('progressSection').style.display = 'block';
+                    document.getElementById('targetTotal').textContent = formData.quantity;
+                    startProgressMonitoring();
+                } else {
+                    alert('Error: ' + data.error);
+                    document.getElementById('startBtn').disabled = false;
+                    document.getElementById('startBtn').textContent = 'тЦ╢ рж╢рзБрж░рзБ ржХрж░рзБржи';
+                }
+            } catch (error) {
+                alert('рж╕ржВржпрзЛржЧ рж╕ржорж╕рзНржпрж╛: ' + error.message);
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('startBtn').textContent = 'тЦ╢ рж╢рзБрж░рзБ ржХрж░рзБржи';
+            }
+        });
+        
+        function startProgressMonitoring() {
+            if (progressInterval) clearInterval(progressInterval);
+            
+            progressInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/get_progress');
+                    const data = await response.json();
+                    
+                    const percentage = (data.progress / data.total) * 100;
+                    document.getElementById('progressFill').style.width = percentage + '%';
+                    document.getElementById('progressFill').textContent = Math.round(percentage) + '%';
+                    document.getElementById('progressCount').textContent = data.progress;
+                    
+                    if (data.progress >= data.total) {
+                        document.getElementById('statusText').textContent = 'рж╕ржорзНржкржирзНржи!';
+                        document.getElementById('startBtn').disabled = false;
+                        document.getElementById('startBtn').textContent = 'тЦ╢ рж╢рзБрж░рзБ ржХрж░рзБржи';
+                        clearInterval(progressInterval);
+                    } else if (data.active) {
+                        document.getElementById('statusText').textContent = 'ржЪрж▓ржЫрзЗ...';
+                    } else {
+                        document.getElementById('statusText').textContent = 'ржерзЗржорзЗ ржЖржЫрзЗ';
+                    }
+                } catch (error) {
+                    console.error('Progress fetch error:', error);
+                }
+            }, 1000);
+        }
+        
+        document.getElementById('stopBtn').addEventListener('click', async () => {
+            await fetch('/stop_scraping', {method: 'POST'});
+            document.getElementById('statusText').textContent = 'ржмржирзНржз ржХрж░рж╛ рж╣ржпрж╝рзЗржЫрзЗ';
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('startBtn').textContent = 'тЦ╢ рж╢рзБрж░рзБ ржХрж░рзБржи';
+            clearInterval(progressInterval);
+        });
+        
+        document.getElementById('downloadBtn').addEventListener('click', async () => {
+            const response = await fetch('/get_progress');
+            const data = await response.json();
+            window.location.href = '/download?filename=' + data.filename;
+        });
+    </script>
+</body>
+</html>
